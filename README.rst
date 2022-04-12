@@ -156,4 +156,4 @@ user installs, and therefore only needs to be added to the PYTHONPATH once.
 
 The documentation_ for PyConform is hosted on GitHub Pages.
 
-.. _documentation:  https://ncar.github.io/pyconform
+.. _documentation: https://ncar.github.io/PyConform/
