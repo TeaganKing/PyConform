@@ -21,9 +21,9 @@ __PARSER__.add_argument('-d', '--definition', default=False, action='store_true'
                              'Attribute argument ignored, if specified.')
 __PARSER__.add_argument('specfile', help='Name of specfile to pull from')
 
-#===================================================================================================
+# =============================================================================
 # cli - Command-Line Interface
-#===================================================================================================
+# =============================================================================
 def cli(argv=None):
     """
     Command-Line Interface
@@ -31,9 +31,9 @@ def cli(argv=None):
     return __PARSER__.parse_args(argv)
 
 
-#===================================================================================================
+# =============================================================================
 # main - Main Program
-#===================================================================================================
+# =============================================================================
 def main(argv=None):
     """
     Main program
@@ -75,22 +75,22 @@ def main(argv=None):
                 vatts = {}
                 if args.attribute in spec[v]['attributes']:
                     vatts = {args.attribute:  spec[v]['attributes'][args.attribute]}
-            print '{}:'.format(v)
+            print('{}:'.format(v))
             for a in vatts:
-                print '   {}: {}'.format(a, vatts[a])
+                print('   {}: {}'.format(a, vatts[a]))
 
     if args.definition:
         for v, vdef in defined:
-            print '{} = {}'.format(v, vdef)
-        print
-        print 'Undefined Variables: {}'.format(', '.join(undefined))
+            print('{} = {}'.format(v, vdef))
+        print()
+        print('Undefined Variables: {}'.format(', '.join(undefined)))
         if len(missingdfns) > 0:
-            print
-            print 'NO DEFINITIONS: {}'.format(', '.join(missingdfns))
+            print()
+            print('NO DEFINITIONS: {}'.format(', '.join(missingdfns)))
 
 
-#===================================================================================================
+# =============================================================================
 # Command-line Operation
-#===================================================================================================
+# =============================================================================
 if __name__ == '__main__':
     main()

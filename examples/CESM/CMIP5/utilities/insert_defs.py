@@ -17,9 +17,9 @@ __PARSER__ = ArgumentParser(description='Push definitions into a JSON standardiz
 __PARSER__.add_argument('stdfile', help='Name of the standardization file')
 __PARSER__.add_argument('deffile', help='Name of the definitions file')
 
-#===================================================================================================
+# =============================================================================
 # cli - Command-Line Interface
-#===================================================================================================
+# =============================================================================
 def cli(argv=None):
     """
     Command-Line Interface
@@ -27,9 +27,9 @@ def cli(argv=None):
     return __PARSER__.parse_args(argv)
 
 
-#===================================================================================================
+# =============================================================================
 # main - Main Program
-#===================================================================================================
+# =============================================================================
 def main(argv=None):
     """
     Main program
@@ -61,22 +61,22 @@ def main(argv=None):
             if 'definition' in stdinfo[v]:
                 if (isinstance(stdinfo[v]['definition'], basestring) and
                     vardefs[v] != stdinfo[v]['definition']):
-                    overwrites.append((v,vardefs[v]))
+                    overwrites.append((v, vardefs[v]))
                 else:
                     unchanged.append(v)
 
     for v, vdef in overwrites:
-        print 'Overwritting: {} = {!r} --> {!r}'.format(v, stdinfo[v]['definition'], vdef)
+        print('Overwritting: {} = {!r} --> {!r}'.format(v, stdinfo[v]['definition'], vdef))
         stdinfo[v]['definition'] = vdef
-        print
+        print()
     if len(unchanged) > 0:
-        print 'Not overwriting definitions for {}'.format(', '.join(unchanged))
+        print('Not overwriting definitions for {}'.format(', '.join(unchanged)))
 
     write_standardization(STDFILE, stdinfo)
 
 
-#===================================================================================================
+# =============================================================================
 # Command-line Operation
-#===================================================================================================
+# =============================================================================
 if __name__ == '__main__':
     main()

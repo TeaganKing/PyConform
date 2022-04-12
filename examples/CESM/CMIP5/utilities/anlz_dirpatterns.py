@@ -15,9 +15,9 @@ from argparse import ArgumentParser
 
 __PARSER__ = ArgumentParser(description='Analyze file-directory patterns of CMIP5 data')
 
-#===================================================================================================
+# =============================================================================
 # cli - Command-Line Interface
-#===================================================================================================
+# =============================================================================
 def cli(argv=None):
     """
     Command-Line Interface
@@ -25,9 +25,9 @@ def cli(argv=None):
     return __PARSER__.parse_args(argv)
 
 
-#===================================================================================================
+# =============================================================================
 # main - Main Program
-#===================================================================================================
+# =============================================================================
 def main(argv=None):
     """
     Main program
@@ -51,14 +51,14 @@ def main(argv=None):
         else:
             frtcorr[table] = {frt}
 
-    print 'Tables with multiple freq/realm/table patterns:'
+    print('Tables with multiple freq/realm/table patterns:')
     multfrt = [table for table in frtcorr if len(frtcorr[table]) > 1]
     if len(multfrt) > 0:
         for table in multfrt:
-            print "  Table {}:  {}".format(table,', '.join('/'.join(frt) for frt in frtcorr[table]))
+            print("  Table {}:  {}".format(table, ', '.join('/'.join(frt) for frt in frtcorr[table])))
     else:
-        print "  None"
-    print
+        print("   None")
+    print()
 
     # Analyze freq/table correlations
     ftcorr = {}
@@ -70,23 +70,23 @@ def main(argv=None):
         else:
             ftcorr[table] = {ft}
 
-    print 'Tables with multiple freq/table patterns:'
+    print('Tables with multiple freq/table patterns:')
     multft = [table for table in ftcorr if len(ftcorr[table]) > 1]
     if len(multft) > 0:
         for table in multft:
-            print "  Table {}:  {}".format(table,', '.join('/'.join(ft) for ft in ftcorr[table]))
+            print("  Table {}:  {}".format(table, ', '.join('/'.join(ft) for ft in ftcorr[table])))
     else:
-        print "  None"
-    print
+        print("  None")
+    print()
 
-    print 'Unique freq/table patterns:'
+    print('Unique freq/table patterns:')
     uniqft = [table for table in ftcorr if len(ftcorr[table]) == 1]
     if len(uniqft) > 0:
         for table in uniqft:
-            print "  Table {}:  {}".format(table,', '.join('/'.join(ft) for ft in ftcorr[table]))
+            print("  Table {}:  {}".format(table, ', '.join('/'.join(ft) for ft in ftcorr[table])))
     else:
-        print "  None"
-    print
+        print("  None")
+    print()
 
     # Group variables by table
     vtcorr = {}
@@ -104,23 +104,23 @@ def main(argv=None):
             else:
                 vrcorr[var] = {realm}
 
-    print 'Variables in multiple tables:'
+    print('Variables in multiple tables:')
     multvt = [var for var in vtcorr if len(vtcorr[var]) > 1]
     if len(multvt) > 0:
         for var in multvt:
-            print "  Variable {}:  {}".format(var,', '.join(vtcorr[var]))
+            print("  Variable {}:  {}".format(var, ', '.join(vtcorr[var])))
     else:
-        print "  None"
-    print
+        print("  None")
+    print()
 
-    print 'Variables in multiple realms:'
+    print('Variables in multiple realms:')
     multvr = [var for var in vrcorr if len(vrcorr[var]) > 1]
     if len(multvr) > 0:
         for var in multvr:
-            print "  Variable {}:  {}".format(var,', '.join(vrcorr[var]))
+            print("  Variable {}:  {}".format(var, ', '.join(vrcorr[var])))
     else:
-        print "  None"
-    print
+        print("  None")
+    print()
 
     # Analyze variable groups by freq/realm/table patterns
     vgroups = {}
@@ -151,23 +151,23 @@ def main(argv=None):
                 for v in unmatched:
                     vgsubsets[frt].add(v)
 
-    print 'Variables in groups that can not represent a single freq/realm/table set:'
+    print('Variables in groups that can not represent a single freq/realm/table set:')
     uniqsubsets = [frt for frt in vgsubsets if len(vgsubsets[frt]) > 0]
     if len(uniqsubsets) > 0:
         for frt in uniqsubsets:
-            print "  {}: {}".format(frt, ', '.join(sorted(vgsubsets[frt])))
+            print("  {}: {}".format(frt, ', '.join(sorted(vgsubsets[frt]))))
     else:
-        print "  None"
-    print
+        print("  None")
+    print()
 
-    print 'Variable groups representing a single freq/realm/table set:'
+    print('Variable groups representing a single freq/realm/table set:')
     for frt in vgsuperset:
-        print "  {}: {}".format(frt, ', '.join(sorted(vgsuperset[frt])))
-    print
+        print("  {}: {}".format(frt, ', '.join(sorted(vgsuperset[frt]))))
+    print()
 
 
-#===================================================================================================
+# =============================================================================
 # Command-line Operation
-#===================================================================================================
+# =============================================================================
 if __name__ == '__main__':
     main()

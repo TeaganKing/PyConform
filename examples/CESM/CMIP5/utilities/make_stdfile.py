@@ -23,9 +23,9 @@ __PARSER__.add_argument('-s', '--skip', default=[], action='append',
                         help='Skip writing attributes with the given name')
 __PARSER__.add_argument('root', help='Root directory where output files can be found')
 
-#===================================================================================================
+# =============================================================================
 # cli - Command-Line Interface
-#===================================================================================================
+# =============================================================================
 def cli(argv=None):
     """
     Command-Line Interface
@@ -33,9 +33,9 @@ def cli(argv=None):
     return __PARSER__.parse_args(argv)
 
 
-#===================================================================================================
+# =============================================================================
 # StandardizationEncoder
-#===================================================================================================
+# =============================================================================
 class StandardizationEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, numpy.integer):
@@ -48,17 +48,17 @@ class StandardizationEncoder(json.JSONEncoder):
             return super(MyEncoder, self).default(obj)
 
 
-#===================================================================================================
+# =============================================================================
 # write_standardization
-#===================================================================================================
+# =============================================================================
 def write_standardization(name, info):
     with open(name, 'w') as f:
         json.dump(info, f, indent=4, cls=StandardizationEncoder, sort_keys=True)
 
 
-#===================================================================================================
+# =============================================================================
 # main - Main Program
-#===================================================================================================
+# =============================================================================
 def main(argv=None):
     """
     Main program
@@ -94,12 +94,12 @@ def main(argv=None):
     if inst != 'NCAR' and model != 'CCSM4':
         raise ValueError('Root appears to be malformed')
 
-    print 'Institution:     {}'.format(inst)
-    print 'Model:           {}'.format(model)
-    print 'Experiment:      {}'.format(expt)
-    print 'Frequency:       {}'.format(freq)
-    print 'Realm:           {}'.format(realm)
-    print 'Table:           {}'.format(table)
+    print('Institution:     {}'.format(inst))
+    print('Model:           {}'.format(model))
+    print('Experiment:      {}'.format(expt))
+    print('Frequency:       {}'.format(freq))
+    print('Realm:           {}'.format(realm))
+    print('Table:           {}'.format(table))
 
     # Pick a common ensemble member for all variables
     vardirs = {}
@@ -123,21 +123,21 @@ def main(argv=None):
         for var in listdir(vdir):
             vardirs[var] = pjoin(vdir, var)
 
-    print 'Ensemble Member: {}'.format(rip)
-    print
+    print('Ensemble Member: {}'.format(rip))
+    print()
 
     skipatts = set(args.skip)
 
     stdinfo = {}
     for var in vardirs:
         vdir = vardirs[var]
-        vfile = sorted(glob(pjoin(vdir,'*.nc')))[0]
+        vfile = sorted(glob(pjoin(vdir, '*.nc')))[0]
         vds = Dataset(vfile)
-        fattrs = {str(a):vds.getncattr(a) for a in vds.ncattrs() if a not in skipatts}
+        fattrs = {str(a): vds.getncattr(a) for a in vds.ncattrs() if a not in skipatts}
         for v in vds.variables:
             vobj = vds.variables[v]
             if v not in stdinfo:
-                stdinfo[v] = {"attributes": {str(a):vobj.getncattr(a)
+                stdinfo[v] = {"attributes": {str(a): vobj.getncattr(a)
                                              for a in vobj.ncattrs() if a not in skipatts},
                               "datatype": str(vobj.dtype),
                               "dimensions": [str(d) for d in vobj.dimensions]}
@@ -146,17 +146,17 @@ def main(argv=None):
                 else:
                     stdinfo[v]["definition"] = ''
                 if v == var:
-                    fname = '{}_{}_{}_{}_{}_YYYYMM.nc'.format(v,table,model,expt,rip)
+                    fname = '{}_{}_{}_{}_{}_YYYYMM.nc'.format(v, table, model, expt, rip)
                     stdinfo[v]["file"] = {"filename": fname,
                                           "attributes": fattrs}
 
     stdname = '{}_{}_{}_{}.json'.format(model, expt, realm, table)
     write_standardization(stdname, stdinfo)
-    print "Done."
+    print("Done.")
 
 
-#===================================================================================================
+# =============================================================================
 # Command-line Operation
-#===================================================================================================
+# =============================================================================
 if __name__ == '__main__':
     main()

@@ -16,9 +16,9 @@ from argparse import ArgumentParser
 __PARSER__ = ArgumentParser(description='Write file-directory patterns of CMIP5 data to file')
 __PARSER__.add_argument('root', help='Root directory where output files can be found')
 
-#===================================================================================================
+# =============================================================================
 # cli - Command-Line Interface
-#===================================================================================================
+# =============================================================================
 def cli(argv=None):
     """
     Command-Line Interface
@@ -26,9 +26,9 @@ def cli(argv=None):
     return __PARSER__.parse_args(argv)
 
 
-#===================================================================================================
+# =============================================================================
 # main - Main Program
-#===================================================================================================
+# =============================================================================
 def main(argv=None):
     """
     Main program
@@ -48,8 +48,8 @@ def main(argv=None):
         raise ValueError('Root appears to be malformed')
 
     # Standard output
-    print 'Institution: {}'.format(inst)
-    print 'Model: {}'.format(model)
+    print('Institution: {}'.format(inst))
+    print('Model: {}'.format(model))
 
     # Fill out a list of CMIP5 directory patterns found on disk
     ncvars = []
@@ -73,8 +73,8 @@ def main(argv=None):
             f.write(line + linesep)
 
 
-#===================================================================================================
+# =============================================================================
 # Command-line Operation
-#===================================================================================================
+# =============================================================================
 if __name__ == '__main__':
     main()

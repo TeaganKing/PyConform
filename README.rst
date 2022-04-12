@@ -104,7 +104,7 @@ These dependencies imply the dependencies:
 * UDUNITS2
 
 Additionally, the entire package is designed to work with Python v2.7 and up
-to (but not including) Python v3.0.
+to Python v3.8.
 
 The version requirements have not been rigidly tested, so earlier versions
 may actually work.  No version requirement is made during installation, though,

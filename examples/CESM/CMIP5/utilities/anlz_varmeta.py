@@ -19,9 +19,9 @@ __PARSER__ = ArgumentParser(description='Analyze variable metadata of CMIP5 data
 __PARSER__.add_argument('-v', '--verbose', action='store_true', default=False,
                         help='Enable full output of variable differences')
 
-#===================================================================================================
+# =============================================================================
 # cli - Command-Line Interface
-#===================================================================================================
+# =============================================================================
 def cli(argv=None):
     """
     Command-Line Interface
@@ -29,9 +29,9 @@ def cli(argv=None):
     return __PARSER__.parse_args(argv)
 
 
-#===================================================================================================
+# =============================================================================
 # ddiff
-#===================================================================================================
+# =============================================================================
 def ddiff(ds, xkeys=[]):
     """
     Difference of multiple dictionaries
@@ -52,9 +52,9 @@ def ddiff(ds, xkeys=[]):
     return nonunif, unequal
 
 
-#===================================================================================================
+# =============================================================================
 # main - Main Program
-#===================================================================================================
+# =============================================================================
 def main(argv=None):
     """
     Main program
@@ -75,33 +75,33 @@ def main(argv=None):
              'modeling_realm', 'source', 'frequency', 'forcing_note']
 
     # Print out skipped attributes
-    print 'Attributes to be skipped:'
+    print('Attributes to be skipped:')
     for key in sorted(xkeys):
-        print '   "{}"'.format(key)
-    print
+        print('   "{}"'.format(key))
+    print()
 
     # Find variable attribute differences
-    print 'Finding differences in attributes...'
-    print
+    print('Finding differences in attributes...')
+    print()
     for var in vatts:
         nonunif, unequal = ddiff([vatts[var][xfrte] for xfrte in vatts[var]], xkeys=xkeys)
         if len(nonunif) > 0 or len(unequal) > 0:
-            print 'Diffs in Variable: {}'.format(var)
+            print('Diffs in Variable: {}'.format(var))
         if len(nonunif) > 0:
-            print '    Non-uniform keys: {}'.format(', '.join(sorted(nonunif)))
+            print('    Non-uniform keys: {}'.format(', '.join(sorted(nonunif))))
         if len(unequal) > 0:
             for k in unequal:
                 if args.verbose:
-                    print '   "{}": {}'.format(k, ', '.join(str(v) for v in unequal[k]))
+                    print('   "{}": {}'.format(k, ', '.join(str(v) for v in unequal[k])))
                 else:
-                    print '   "{}"'.format(k)
+                    print('   "{}"'.format(k))
         if len(nonunif) > 0 or len(unequal) > 0:
             print
 
-    print "Done."
+    print("Done.")
 
-#===================================================================================================
+# =============================================================================
 # Command-line Operation
-#===================================================================================================
+# =============================================================================
 if __name__ == '__main__':
     main()
